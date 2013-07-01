@@ -12,7 +12,7 @@ namespace Miusiquita.Helpers
 		public void Start()
 		{
 			// Call the addMessage method on all clients            
-			Clients.All.Play();
+			Clients.All.Play(DateTime.UtcNow.AddSeconds(30));
 		}
 	}
 }
