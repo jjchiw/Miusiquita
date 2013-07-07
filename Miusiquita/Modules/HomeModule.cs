@@ -17,7 +17,7 @@ namespace Miusiquita.Modules
 					return Response.AsRedirect("/rooms/my");
 
 				var m = Context.Model("Miusiquita");
-				return View["/home/index.html", m];
+				return View["index.html", m];
 			};
 		}
 	}
