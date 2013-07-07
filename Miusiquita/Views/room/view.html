@@ -1,0 +1,70 @@
+﻿@Master['layout/layout.html']
+
+@Section['Content']
+
+<div class="hero-unit">
+<h1>@Model.RoomName (<span data-bind="text: userTotal"></span>) online</h1>
+@If.IsOwner
+<p><a class="btn btn-primary btn-large" id="play-pause"><label data-bind="text: action"></label></a></p>
+@EndIf
+</div>
+
+<div class="row">
+    <div class="span6">
+        <h2>Files</h2>
+        <ul>
+        @Each.Files
+            <li>@Current</li>
+        @EndEach
+        </ul>
+    </div>
+</div>
+
+@EndSection
+@Section['PageScript']
+		<script src="/js/knockout/knockout.min.js"></script>
+
+    <script src="/js/signalr/jquery.signalR-2.0.0-beta2.min.js" type="text/javascript"></script>
+    <!--  If this is an MVC project then use the following -->
+    <!--  <script src="~/signalr/hubs" type="text/javascript"></script> -->
+    <script src="/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript">
+        var viewModel = {
+            userTotal: ko.observable(), // Initially blank
+            action: ko.observable()
+        };
+        viewModel.userTotal(0); // Text appears
+        viewModel.action("Play");
+
+
+        $(function () {
+            // Proxy created on the fly          
+            var jukebox = $.connection.jukeboxHub;
+
+            // Declare a function on the chat hub so the server can invoke it          
+            jukebox.client.play = function () {
+                viewModel.action("Stop");
+            };
+
+            jukebox.client.UpdateClientsCount = function (val) {
+                var current = viewModel.userTotal();
+                viewModel.userTotal(current + val);
+            };
+
+            // Start the connection
+            $.connection.hub.start().done(function () {
+                $("#play-pause").click(function () {
+                    // Call the chat method on the server
+                    if(viewModel.action() == "Play")
+                        jukebox.server.start("@Model.RoomId");
+                    else
+                        jukebox.server.stop("@Model.RoomId");
+                });
+
+                jukebox.server.join("@Model.RoomId");
+            });
+        });
+
+        ko.applyBindings(viewModel);
+    </script>
+@EndSection

@@ -1,0 +1,30 @@
+﻿@Master['layout/layout.html']
+
+@Section['Content']
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Dropbox Path</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: rooms">
+                    <tr>
+                        <td>
+                            <label data-bind="text: name"></label>
+                        </td>
+                        <td>
+                            <label data-bind="text: dropboxPath"></label>
+                        </td>
+                        <td>
+                            <a class="btn" data-bind="attr: { href: '/'+Id}"><i class="icon-eye-open"></i></a>
+                        </td>
+                     </tr>
+                </tbody>
+            </table>
+@EndSection
+@Section['PageScript']
+		<script src="/js/knockout/knockout.min.js"></script>
+		<script src="/js/all-room-app.js"></script>
+@EndSection

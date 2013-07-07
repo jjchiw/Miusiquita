@@ -1,0 +1,59 @@
+﻿@Master['layout/layout.html']
+
+@Section['Content']
+            
+            @IfNot.HaveDropboxConfiguration
+            <div class="alert">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Warning!</strong> Give Miusiquita <a href="/rooms/dropbox-access" >access to dropbox</a>, please :)
+            </div>
+            @EndIf
+            @If.HaveDropboxConfiguration
+            <fieldset>
+                <legend>Add room</legend>
+                <label>Name</label>
+                <input type="text" placeholder="The name of you room" data-bind="value: name">
+                <label>Dropbox Path</label>
+                <input type="text" placeholder="The path of dropbox" data-bind="value: dropboxPath">
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary" data-bind="click: $root.add, visible: !editing()">Add</button>
+                        <button type="submit" class="btn btn-primary" data-bind="click: $root.update, visible: editing()">Update</button>
+                        <button type="submit" class="btn btn-primary" data-bind="click: $root.cancelEditing, visible: editing()">Cancel</button>
+                    </div>
+                </div>
+            </fieldset>
+
+           
+            <table class="table" data-bind="visible: rooms().length">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Dropbox Path</td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: rooms">
+                    <tr data-bind="event : { dblclick: $root.editItem }">
+                        <td>
+                            <label data-bind="text: name"></label>
+                        </td>
+                        <td>
+                            <label data-bind="text: dropboxPath"></label>
+                        </td>
+                        <td>
+                            <a class="btn" data-bind="attr: { href: '/'+Id}"><i class="icon-eye-open"></i></a>
+                            <a class="btn" href="#"><i class="icon-pencil" data-bind="click: $root.editItem"></i></a>
+                            <a class="btn" href="#"><i class="icon-trash" data-bind="click: $root.remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            @EndIf
+@EndSection
+@Section['PageScript']
+         
+		<script src="/js/knockout/knockout.min.js"></script>
+		<script src="/js/my-room-app.js"></script>
+
+
+@EndSection
