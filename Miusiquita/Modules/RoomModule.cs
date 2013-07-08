@@ -96,15 +96,12 @@ namespace Miusiquita.Modules
 				
 				var roomId = string.Format("{0}/{1}", this.ModulePath, p.id);
 				Room room = RavenSession.Load<Room>(roomId);
+				var user = RavenSession.Load<User>(room.User.Id);
 
 				if (room == null)
 					return HttpStatusCode.NotFound;
 
-				if (Context.CurrentUser != null)
-				{
-					var user = Context.CurrentUser as User;
-					_dropboxHelper.Client.UserLogin = new DropNet.Models.UserLogin { Token = user.DropboxApiUserToken, Secret = user.DropboxApiUserSecret };
-				}
+				_dropboxHelper.Client.UserLogin = new DropNet.Models.UserLogin { Token = user.DropboxApiUserToken, Secret = user.DropboxApiUserSecret };
 
 				var m = Context.Model("Room " + room.Name);
 				m.MyRoomActive = "active";
