@@ -113,7 +113,7 @@ namespace Miusiquita.Modules
 				m.Files = (dropboxHelper.Client.UserLogin != null ? dropboxHelper.GetFiles(room.DropboxPath).ToList() : room.Songs);
 				m.IsOwner = room.User.Id == Context.UserRavenIdString();
 
-				return View["/room/view.html", m];
+				return View["room/view.html", m];
 			};
 
 			Get["/modified-date/{id}"] = p =>
