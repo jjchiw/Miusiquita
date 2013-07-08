@@ -122,6 +122,7 @@
     <Content Include="Content\css\images\glyphicons-halflings-white.png" />
     <Content Include="Content\css\images\glyphicons-halflings.png" />
     <Content Include="Content\js\all-room-app.js" />
+    <Content Include="Content\js\bootstrap\dropdown.js" />
     <Content Include="Content\js\my-room-app.js" />
     <Content Include="Content\js\knockout\knockout.min.js" />
     <Content Include="Content\js\libs\jquery.blockui.min.js" />
